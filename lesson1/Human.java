@@ -1,16 +1,18 @@
 package lesson1;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Human {
+public class Human implements Serializable {
     private String name;
     private String gender;
     private Human father;
     private Human mother;
     private ArrayList<Human> children;
-/** 
- * конструкторы
- */
+
+    /**
+     * конструкторы
+     */
     public Human(String name, String gender, Human father, Human mother) {
         this.name = name;
         this.gender = gender;
@@ -19,6 +21,7 @@ public class Human {
         this.children = new ArrayList<>();
 
     }
+
     public Human(String name, String gender) {
         this.name = name;
         this.gender = gender;
@@ -27,9 +30,10 @@ public class Human {
 
     public Human() {
     }
-/** 
- * геттеры и сеттры
- */
+
+    /**
+     * геттеры и сеттры
+     */
     public String getName() {
         return name;
     }
@@ -69,17 +73,23 @@ public class Human {
     public void setChildren(ArrayList<Human> children) {
         this.children = children;
     }
-/** 
- * печать списка детей
- */
-    public void printChildren(ArrayList<Human> ch) {
-        for (Human h : ch) {
-            System.out.println(h);
+
+    /**
+     * печать списка детей
+     */
+    public void printChildren(ArrayList<Human> children) {
+        for (Human h : children) {
+            System.out.println(h); 
         }
     }
-/** 
- * перегрузка toString
- */
+
+    public void relativ(Human child) {
+        getChildren().add(child);
+    }
+
+    /**
+     * перегрузка toString
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -90,7 +100,6 @@ public class Human {
         String res = sb.toString();
         return res;
 
-    
     }
 
 }
