@@ -1,4 +1,4 @@
-package scr;
+package srс;
 import java.io.*;
 
 public class FileHandler implements Writable, Serializable {

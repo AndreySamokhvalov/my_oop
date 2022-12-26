@@ -1,9 +1,9 @@
 package comparators;
 
 
-import scr.Human;
-
 import java.util.Comparator;
+
+import srс.Human;
 
 public class ComparatorByAge implements Comparator<Human> {
     @Override

@@ -1,12 +1,13 @@
-package scr;
+package srс;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import comparators.ComparatorByAge;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Serializable, Iterable<Human>  {
     private List<Human> humans;
     private Writable writable;
 
@@ -138,6 +139,11 @@ public class FamilyTree implements Serializable {
 
     public void sortByAge(){
         Collections.sort(this.getHumans(), new ComparatorByAge());
+    }
+
+    @Override
+    public Iterator<Human> iterator() {
+        return new FamilyTreeIterator(humans);
     }
 
     

@@ -1,4 +1,4 @@
-package scr;
+package srс;
 import java.io.Serializable;
 
 public interface Writable {

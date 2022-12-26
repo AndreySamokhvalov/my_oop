@@ -1,4 +1,4 @@
-package scr;
+package srс;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-//import homeTask.scr.Human
+
 
 public class main {
     public static void main(String[] args) {
@@ -416,7 +416,7 @@ public class main {
     // чтение файла
     public static List<String> readMenu() {
         List<String> arr = new ArrayList<String>();
-        File file = new File("D:\\AndyData\\my_oop\\lesson1\\menu.txt");
+        File file = new File("D:\\AndyData\\my_oop\\homeTask\\srс\\menu.txt");
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
