@@ -1,4 +1,5 @@
 package srс;
+
 import java.io.*;
 
 public class FileHandler implements Writable, Serializable {
@@ -13,9 +14,8 @@ public class FileHandler implements Writable, Serializable {
         this.fileName = fileName;
     }
 
-    
 
-  // сохранение в файл
+    // сохранение в файл
     @Override
     public void save(Serializable serializable) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
@@ -27,17 +27,16 @@ public class FileHandler implements Writable, Serializable {
         }
     }
 
-// чтение файла
+    // чтение файла
     @Override
-    public FamilyTree read() {
+    public Object read() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
-            return (FamilyTree) ois.readObject();
+            return ois.readObject();
         } catch (Exception ex) {
             System.out.println("Ошибка чтения файла!");
             System.out.println(ex.getMessage());
         }
         return null;
     }
-
 
 }

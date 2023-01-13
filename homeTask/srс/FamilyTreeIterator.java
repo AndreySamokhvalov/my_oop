@@ -3,12 +3,11 @@ package srс;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTreeIterator implements Iterator<Human> {
-
-    private List<Human> humans;
+public class FamilyTreeIterator<T> implements Iterator<T> {
+    private List<T> humans;
     private int index;
 
-    public FamilyTreeIterator(List<Human> members) {
+    public FamilyTreeIterator(List<T> humans) {
         this.humans = humans;
     }
 
@@ -22,7 +21,7 @@ public class FamilyTreeIterator implements Iterator<Human> {
     }
 
     @Override
-    public Human next() {
+    public T next() {
         return humans.get(index++);
     }
 }
