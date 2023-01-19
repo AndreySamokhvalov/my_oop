@@ -3,15 +3,19 @@ package srс.console;
 import srс.FamilyTree;
 import srс.FileHandler;
 import srс.Human;
+import srс.commands.*;
 import srс.presenter.Presenter;
 
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Console<T extends Human> {
 
     private FamilyTree familyTree;
     private FileHandler fileHandler;
     private Presenter presenter;
+    List<Commands> commandsList;
 
     public Console(FamilyTree familyTree, FileHandler fileHandler, Presenter presenter) {
         this.familyTree = familyTree;
@@ -22,9 +26,18 @@ public class Console<T extends Human> {
 
         this.familyTree = familyTree.readFamilyTree();
         presenter.setFamilyTree(this.familyTree);
+        commandsList = new ArrayList<>();
     }
 
-    private T getHuman(FamilyTree familyTree) {
+    public FamilyTree getFamilyTree() {
+        return familyTree;
+    }
+
+    
+        public Presenter getPresenter() {
+            return presenter;
+        }
+        public T getHuman(FamilyTree familyTree) {
         Human human = new Human();
         Scanner iScanner = new Scanner(System.in, "Cp866");
         System.out.print("Введите имя: ");
@@ -41,7 +54,7 @@ public class Console<T extends Human> {
             str = iScanner.nextLine();
             human.setAge(Integer.parseInt(str));
         } catch (Exception exception) {
-            System.out.println("Возраст не может быть задан в таком виде!");
+            System.out.println("Неверный формат возраста");
             human.setAge(0);
         }
         System.out.print("Введите имя отца: ");
@@ -56,62 +69,47 @@ public class Console<T extends Human> {
         familyTree.setRelative(newFather, newMother, human);
         
         return (T) human;
+    }
 
+    public String getName() {
+        Scanner iScanner = new Scanner(System.in);
+        System.out.print("Введите имя: ");
+        return iScanner.nextLine();
     }
 
     public void go() {
         Scanner iScanner = new Scanner(System.in);
-        boolean repeat = true;
         T human;
-        while (repeat) {
-            System.out.println("Введите действие:");
-            
-            System.out.println("1 - показать всех членов семьи");
-            System.out.println("2 - добавить нового члена семьи");
-            System.out.println("3 - найти члена семьи по имени");
-            System.out.println("4 - показать всех детей члена семьи");
-            System.out.println("5 - сортировка членов семьи по имени");
-            System.out.println("6 - сортировка членов семьи по возрасту).");
-            System.out.println("Enter - выход + сохранение FamilyTree.dat ");
+        
+        commandsList.add(new Command_2(this));
+        commandsList.add(new Command_3(this));
+        commandsList.add(new Command_4(this));
+        commandsList.add(new Command_5(this));
+        commandsList.add(new Command_6(this));
+        commandsList.add(new Command_7(this));
+        commandsList.add(new Command_1(this));
+
+        while (true) {
+            System.out.println("Выберите команду:");
+            for (int i = 1; i < commandsList.size(); i++) {
+                System.out.println(i + " - " + commandsList.get(i).description());
+            }
             
             System.out.print("-->\t");
             String str = iScanner.nextLine();
-            switch (str) {
-                case "":
-                    // сохраняем FamilyTree в файл и выходим из цикла while
-                    presenter.saveFamilyTree();
-                    repeat = false;
-                    break;
-                case "1":
-                    presenter.printFamilyTree();
-                    break;
-                case "2":
-                    human = this.getHuman(familyTree);
-                    presenter.addNewHuman(human);
-                    break;
-                case "3":
-                    System.out.print("Введите имя: ");
-                    str = iScanner.nextLine();
-                    System.out.println(presenter.searchHuman(str));
 
-                    break;
-                case "4":
-                    System.out.print("Введите имя: ");
-                    str = iScanner.nextLine();
-                    System.out.println(presenter.getAllChildren(str));
-                    break;
-                case "5":
-                System.out.println(presenter.sortFamilyTree("name"));
-                    break;
-                case "6":
-                System.out.println(presenter.sortFamilyTree("age"));
-                    break;
-                default:
-                    System.out.println("Некорректный ввод.");
-                    break;
-            }
+            try {
+                int choice = Integer.parseInt(str);
+                if ((choice >= 0) & (choice < commandsList.size())) {
+                    commandsList.get(Integer.parseInt(str)).execute();
+                } else {
+                    System.out.println("Такой команды не существует!");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Не корректный ввод! Попробуйте ещё раз.");
+            
         }
-        iScanner.close();
-    }
 
+    }
+}
 }

@@ -15,10 +15,6 @@ public class FamilyTree<T extends Human> implements Serializable, Iterable<T> {
     /**
      * создаение конструкторов
      */
-    // public FamilyTree() {
-    // this.humans = new ArrayList<>();
-    // this.writable = new FileHandler();
-    // }
 
     public FamilyTree(Writable writable) {
         this.humans = new ArrayList<>();
@@ -34,33 +30,18 @@ public class FamilyTree<T extends Human> implements Serializable, Iterable<T> {
     }
 
     public FamilyTree readFamilyTree() {
-
         if (writable != null) {
-            if (writable instanceof FileHandler) {
-
-                if (writable.read() == null) {
-
-                    System.out.println("FamilyTree в файле нет! Создаём новое FamilyTree.");
-                    return new FamilyTree(writable);
-                } else {
-                    System.out.println("FamilyTree загружено из файла.");
-                    return (FamilyTree) writable.read();
-                }
+            if (writable.read() == null) {
+                System.out.println("FamilyTree в файле нет! Создаём новое FamilyTree.");
+                return new FamilyTree(writable);
+            } else {
+                System.out.println("FamilyTree загружено из файла.");
+                return (FamilyTree) writable.read();
             }
         } else {
             System.out.println("Файл не загружен!");
             return null;
         }
-        return null;
-    }
-
-    // ----------------------------------------------------
-    /**
-     * добавление
-     */
-    public void add(String name, String gender, Human father, Human mother, int age) {
-        Human human = new Human(name, gender, father, mother, age);
-        humans.add((T) human);
     }
 
     /**
@@ -103,36 +84,12 @@ public class FamilyTree<T extends Human> implements Serializable, Iterable<T> {
 
     // добавление нового члена семьи
     public void addNewHuman(T newHuman) {
-        this.humans.add((T) newHuman);
+        this.humans.add(newHuman);
         System.out.printf("Добавлен новый член семьи %s\n", newHuman.getName());
     }
 
     public void setWritable(Writable writable) {
         this.writable = writable;
-    }
-
-    public T createHuman() {
-        Human human = new Human();
-        Scanner iScanner = new Scanner(System.in, "Cp866");
-        System.out.print("Введите имя: ");
-        String str = iScanner.nextLine();
-        String nameStr = str.substring(0, 1).toUpperCase() + str.substring(1);
-        human.setName(nameStr);
-
-        System.out.print("Введите пол: ");
-        str = iScanner.nextLine();
-        human.setGender(str);
-
-        System.out.print("Введите возраст: ");
-        try {
-            str = iScanner.nextLine();
-            human.setAge(Integer.parseInt(str));
-        } catch (Exception exception) {
-            System.out.println("Возраст не может быть задан в таком виде!");
-            human.setAge(0);
-        }
-
-        return (T) human;
     }
 
     @Override
@@ -141,7 +98,8 @@ public class FamilyTree<T extends Human> implements Serializable, Iterable<T> {
         System.out.printf("Всего людей в дереве - %d\n", humans.size());
         int count = 0;
         for (T member : this) {
-            familyMembers.append("Член семьи ").append(++count).append(" - ").append(member.getName()).append(", ").append("возраст ").append(member.getAge()).append("\n");
+            familyMembers.append("Член семьи ").append(++count).append(" - ").append(member.getName()).append(", ")
+                    .append("возраст ").append(member.getAge()).append("\n");
         }
         return familyMembers.toString();
     }
@@ -169,7 +127,6 @@ public class FamilyTree<T extends Human> implements Serializable, Iterable<T> {
 
     public void sortFamilyTree(String sortParameter) {
         Collections.sort(this.getHumans(), new Comparator(sortParameter));
-
     }
 
     @Override

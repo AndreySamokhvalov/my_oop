@@ -88,6 +88,19 @@ public class Human implements Serializable, Comparable<Human>  {
         return children;
     }
 
+    public String getAllChildren() {
+        StringBuilder kids = new StringBuilder();
+        if (this.children.size() > 0) {
+            kids.append("У ").append(this.getName()).append(" есть ");
+            for (Human child : this.children) {
+                kids.append(child.getGender().equals("муж") ? "Сын" : "Дочь").append(" - ").append(child.getName()).append(" ");
+            }
+        } else {
+            kids.append("У ").append(this.getName()).append(" детей нет.");
+        }
+        return kids.toString();
+    }
+
     public void setChildren(ArrayList<Human> children) {
         this.children = children;
     }

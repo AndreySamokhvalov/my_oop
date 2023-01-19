@@ -33,23 +33,14 @@ public class Presenter<T extends Human> {
         return (T) familyTree.searchName(str);
     }
 
-    public ArrayList<Human> getAllChildren(String str) {
-        return familyTree.searchName(str).getChildren();
-    }
+    public String getAllChildren(String str) {
+        if (familyTree.searchName(str)!=null) {
+            return familyTree.searchName(str).getAllChildren();
+        } else return String.format("%s нет в FamilyTree!", str);
+}
 
     public FamilyTree sortFamilyTree(String sortParameter) {
         familyTree.sortFamilyTree(sortParameter);
         return familyTree;
     }
-    // public void sortFamilyTreeName() {
-    //     familyTree.sortByName();
-    //     familyTree.printHumans();
-    //     // return familyTree;
-    // }
-
-    // public void sortFamilyTreeAge() {
-    //     familyTree.sortByAge();
-    //     familyTree.printHumans();
-    // }
-
 }
